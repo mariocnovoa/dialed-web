@@ -1,0 +1,13 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["9LUDCHQ74X.com.mariocanas.dialed"],
+        "components": [
+          { "/": "/r", "#": "*", "comment": "Shared recipes; the recipe itself is in the fragment." },
+          { "/": "/r/", "#": "*" }
+        ]
+      }
+    ]
+  }
+}

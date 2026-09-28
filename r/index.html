@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="referrer" content="no-referrer">
+<title>Dialed recipe</title>
+<style>
+  /* Montserrat, served with the page (SIL Open Font License, fonts/OFL.txt): no third-party requests. */
+  @font-face { font-family: "Montserrat"; font-weight: 500; font-display: swap; src: url("../fonts/Montserrat-Medium.ttf") format("truetype"); }
+  @font-face { font-family: "Montserrat"; font-weight: 600; font-display: swap; src: url("../fonts/Montserrat-SemiBold.ttf") format("truetype"); }
+
+  /* The app's colours (Shared/Theme.swift): light, and the same roles on warm near-black. */
+  :root {
+    --canvas:#FBFAF7; --card:#FFFFFF; --tan:#F5F2EB; --hairline:#F1EEE4; --ring:rgba(39,31,27,.06);
+    --ink:#271F1B; --muted:#7D7976; --faint:#9E9794;
+    --button-top:#3B1902; --button-bottom:#130400; --on-button:#FFFFFF;
+    --tick:rgba(39,31,27,.35); --set:#B06A2E; --bean-top:#5A2E10; --bean-bottom:#130400;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --canvas:#15110E; --card:#1F1915; --tan:#2A231E; --hairline:#2E2621; --ring:rgba(0,0,0,.4);
+      --ink:#F3EDE6; --muted:#A79E97; --faint:#857C76;
+      --button-top:#F6F0E7; --button-bottom:#DACDBB; --on-button:#271F1B;
+      --tick:rgba(243,237,230,.4); --set:#D9A066; --bean-top:#F6EEE3; --bean-bottom:#D9C8B2;
+      color-scheme: dark;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin:0; background:var(--canvas); color:var(--ink);
+    font: 500 14px/1.45 "Montserrat", -apple-system, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+    padding: max(20px, env(safe-area-inset-top)) 20px max(32px, env(safe-area-inset-bottom));
+    -webkit-font-smoothing: antialiased;
+  }
+  main { max-width: 440px; margin: 0 auto; display:flex; flex-direction:column; gap:20px; }
+
+  .brand { display:flex; align-items:center; gap:8px; }
+  .mark { width:32px; height:32px; flex:none; }
+  .mark line { stroke-linecap: round; stroke: var(--tick); }
+  .mark line.set { stroke: var(--set); }
+  .mark .crease { fill:none; stroke: var(--canvas); stroke-linecap: round; }
+  .word { height:18px; width:auto; fill: var(--ink); }
+  .method { margin-left:auto; font-size:12px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
+
+  .card { background:var(--card); border-radius:20px; box-shadow: 0 0 0 1px var(--ring), 0 1px 1px var(--ring); overflow:hidden; }
+  .head { padding:22px 20px 18px; }
+  h1 { font-size:24px; font-weight:600; line-height:1.2; margin:0; letter-spacing:-.01em; text-wrap: balance; }
+  .sub { margin-top:4px; color:var(--muted); }
+  .grind { display:flex; flex-direction:column; padding:18px 20px 20px; background:var(--tan); }
+  .grind .label { font-size:12px; font-weight:600; letter-spacing:.02em; color:var(--muted); }
+  .grind .value { font-size:64px; font-weight:600; line-height:1.05; letter-spacing:-.02em; }
+  .grind .on { color:var(--muted); }
+  dl { margin:0; }
+  .row { display:flex; justify-content:space-between; gap:16px; padding:13px 20px; border-top:1px solid var(--hairline); }
+  dt { color:var(--muted); }
+  dd { margin:0; font-weight:600; text-align:right; font-variant-numeric: tabular-nums; }
+
+  .button {
+    display:flex; align-items:center; justify-content:center; height:48px; border-radius:999px;
+    background: linear-gradient(var(--button-top), var(--button-bottom)); color:var(--on-button);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.2), 0 0 0 1px var(--ring), 0 10px 16px -8px rgba(39,31,27,.35);
+    font-size:16px; font-weight:600; text-decoration:none;
+  }
+  .note { margin:0; font-size:12px; letter-spacing:.02em; color:var(--faint); text-align:center; text-wrap: balance; }
+  .error { text-align:center; color:var(--muted); padding:48px 8px; margin:0; }
+</style>
+</head>
+<body>
+<main>
+  <header class="brand">
+    <svg class="mark" viewBox="0 0 100 100" aria-hidden="true"><line class="set" x1="50.00" y1="13.18" x2="50.00" y2="2.80" stroke-width="2.93"/><line class="tick" x1="57.34" y1="8.40" x2="58.03" y2="4.45" stroke-width="1.60"/><line class="tick" x1="64.45" y1="10.30" x2="65.82" y2="6.53" stroke-width="1.60"/><line class="tick" x1="70.06" y1="15.26" x2="73.13" y2="9.94" stroke-width="2.08"/><line class="tick" x1="77.15" y1="17.64" x2="79.73" y2="14.57" stroke-width="1.60"/><line class="tick" x1="82.36" y1="22.85" x2="85.43" y2="20.27" stroke-width="1.60"/><line class="tick" x1="84.74" y1="29.94" x2="90.06" y2="26.87" stroke-width="2.08"/><line class="tick" x1="89.70" y1="35.55" x2="93.47" y2="34.18" stroke-width="1.60"/><line class="tick" x1="91.60" y1="42.66" x2="95.55" y2="41.97" stroke-width="1.60"/><line class="tick" x1="90.12" y1="50.00" x2="96.26" y2="50.00" stroke-width="2.08"/><line class="tick" x1="91.60" y1="57.34" x2="95.55" y2="58.03" stroke-width="1.60"/><line class="tick" x1="89.70" y1="64.45" x2="93.47" y2="65.82" stroke-width="1.60"/><line class="tick" x1="84.74" y1="70.06" x2="90.06" y2="73.13" stroke-width="2.08"/><line class="tick" x1="82.36" y1="77.15" x2="85.43" y2="79.73" stroke-width="1.60"/><line class="tick" x1="77.15" y1="82.36" x2="79.73" y2="85.43" stroke-width="1.60"/><line class="tick" x1="70.06" y1="84.74" x2="73.13" y2="90.06" stroke-width="2.08"/><line class="tick" x1="64.45" y1="89.70" x2="65.82" y2="93.47" stroke-width="1.60"/><line class="tick" x1="57.34" y1="91.60" x2="58.03" y2="95.55" stroke-width="1.60"/><line class="tick" x1="50.00" y1="90.12" x2="50.00" y2="96.26" stroke-width="2.08"/><line class="tick" x1="42.66" y1="91.60" x2="41.97" y2="95.55" stroke-width="1.60"/><line class="tick" x1="35.55" y1="89.70" x2="34.18" y2="93.47" stroke-width="1.60"/><line class="tick" x1="29.94" y1="84.74" x2="26.87" y2="90.06" stroke-width="2.08"/><line class="tick" x1="22.85" y1="82.36" x2="20.27" y2="85.43" stroke-width="1.60"/><line class="tick" x1="17.64" y1="77.15" x2="14.57" y2="79.73" stroke-width="1.60"/><line class="tick" x1="15.26" y1="70.06" x2="9.94" y2="73.13" stroke-width="2.08"/><line class="tick" x1="10.30" y1="64.45" x2="6.53" y2="65.82" stroke-width="1.60"/><line class="tick" x1="8.40" y1="57.34" x2="4.45" y2="58.03" stroke-width="1.60"/><line class="tick" x1="9.88" y1="50.00" x2="3.74" y2="50.00" stroke-width="2.08"/><line class="tick" x1="8.40" y1="42.66" x2="4.45" y2="41.97" stroke-width="1.60"/><line class="tick" x1="10.30" y1="35.55" x2="6.53" y2="34.18" stroke-width="1.60"/><line class="tick" x1="15.26" y1="29.94" x2="9.94" y2="26.87" stroke-width="2.08"/><line class="tick" x1="17.64" y1="22.85" x2="14.57" y2="20.27" stroke-width="1.60"/><line class="tick" x1="22.85" y1="17.64" x2="20.27" y2="14.57" stroke-width="1.60"/><line class="tick" x1="29.94" y1="15.26" x2="26.87" y2="9.94" stroke-width="2.08"/><line class="tick" x1="35.55" y1="10.30" x2="34.18" y2="6.53" stroke-width="1.60"/><line class="tick" x1="42.66" y1="8.40" x2="41.97" y2="4.45" stroke-width="1.60"/><g transform="translate(50 50) rotate(24.06)"><defs><linearGradient id="bean" gradientUnits="userSpaceOnUse" x1="-20.30" y1="-27.38" x2="20.30" y2="27.38"><stop offset="0" style="stop-color:var(--bean-top)"/><stop offset="1" style="stop-color:var(--bean-bottom)"/></linearGradient></defs><ellipse rx="20.30" ry="27.38" fill="url(#bean)"/><path class="crease" d="M0 -24.09C13.80 -6.57 -13.80 6.57 0 24.09" stroke-width="4.01"/></g></svg>
+    <svg class="word" viewBox="3.4 -78.7 297.8 79.5" aria-label="Dialed" role="img"><path d="M30.3 0.8Q22.7 0.8 16.6 -2.6Q10.5 -6 7 -12.2Q3.4 -18.5 3.4 -26.9Q3.4 -35.4 7 -41.6Q10.5 -47.8 16.6 -51.2Q22.7 -54.6 30.3 -54.6Q35.2 -54.6 39.3 -53Q43.4 -51.4 46.4 -48.1L46.4 -74.2L62 -74.2L62 -0L47.1 -0L47.1 -6.2Q41.4 0.8 30.3 0.8ZM33 -12Q38.8 -12 42.8 -16Q46.7 -20 46.7 -26.9Q46.7 -33.9 42.8 -37.9Q38.8 -41.8 33 -41.8Q27.1 -41.8 23.2 -37.9Q19.2 -33.9 19.2 -26.9Q19.2 -20 23.2 -16Q27.1 -12 33 -12ZM73.4 -0L73.4 -53.8L89 -53.8L89 -0ZM81.2 -61.3Q76.9 -61.3 74.2 -63.8Q71.5 -66.3 71.5 -70Q71.5 -73.6 74.2 -76.2Q76.9 -78.7 81.2 -78.7Q85.5 -78.7 88.2 -76.3Q90.9 -73.9 90.9 -70.3Q90.9 -66.4 88.2 -63.9Q85.6 -61.3 81.2 -61.3ZM133.5 -0L133.5 -6.6Q129 0.8 117.1 0.8Q107.6 0.8 102.3 -3.9Q97 -8.5 97 -15.5Q97 -22.6 102.4 -27.1Q107.8 -31.6 120.1 -31.6L132.5 -31.6L132.5 -31.6Q132.5 -36.6 129.5 -39.4Q126.4 -42.2 120.1 -42.2Q115.8 -42.2 111.7 -40.9Q107.5 -39.5 104.6 -37.2L99 -48.1Q103.4 -51.2 109.6 -52.9Q115.8 -54.6 122.2 -54.6Q134.5 -54.6 141.3 -48.8Q148.1 -42.9 148.1 -30.7L148.1 -0ZM132.5 -17L132.5 -22.5L121.8 -22.5Q116.3 -22.5 114.3 -20.7Q112.2 -18.9 112.2 -16.2Q112.2 -13.2 114.6 -11.5Q116.9 -9.7 121 -9.7Q124.9 -9.7 128 -11.6Q131.1 -13.4 132.5 -17ZM159.2 -0L159.2 -74.2L174.8 -74.2L174.8 -0ZM213 0.8Q203.7 0.8 196.8 -2.8Q189.9 -6.4 186.1 -12.7Q182.3 -18.9 182.3 -26.9Q182.3 -35 186 -41.2Q189.8 -47.5 196.3 -51.1Q202.8 -54.6 211 -54.6Q218.9 -54.6 225.2 -51.2Q231.6 -47.8 235.3 -41.6Q239 -35.3 239 -26.7Q239 -25.8 238.9 -24.7Q238.8 -23.5 238.7 -22.5L198 -22.5Q199.2 -17.5 203.2 -14.6Q207.3 -11.7 213.4 -11.7Q217.7 -11.7 220.9 -13Q224.2 -14.3 226.9 -16.9L235.2 -7.9Q227.6 0.8 213 0.8ZM197.9 -31.6L224.3 -31.6Q223.5 -36.7 219.9 -39.8Q216.4 -42.8 211.1 -42.8Q205.8 -42.8 202.2 -39.8Q198.7 -36.7 197.9 -31.6ZM269.5 0.8Q261.9 0.8 255.8 -2.6Q249.7 -6 246.1 -12.2Q242.6 -18.5 242.6 -26.9Q242.6 -35.4 246.1 -41.6Q249.7 -47.8 255.8 -51.2Q261.9 -54.6 269.5 -54.6Q274.4 -54.6 278.5 -53Q282.6 -51.4 285.6 -48.1L285.6 -74.2L301.2 -74.2L301.2 -0L286.3 -0L286.3 -6.2Q280.6 0.8 269.5 0.8ZM272.2 -12Q278 -12 281.9 -16Q285.9 -20 285.9 -26.9Q285.9 -33.9 281.9 -37.9Q278 -41.8 272.2 -41.8Q266.3 -41.8 262.3 -37.9Q258.4 -33.9 258.4 -26.9Q258.4 -20 262.3 -16Q266.3 -12 272.2 -12Z"/></svg>
+    <span class="method" id="method"></span>
+  </header>
+  <div id="app"><p class="error">Opening the recipe…</p></div>
+</main>
+<script>
+// Everything happens in this browser: the recipe is in the part of the link after "#",
+// which browsers never send to a server.
+const METHODS = { espresso: "Espresso", v60: "Pour over", chemex: "Chemex", aeropress: "AeroPress", "french-press": "French press",
+  moka: "Moka pot", "cold-brew": "Cold brew" };
+const ROASTS = { light: "Light", mediumLight: "Medium-light", medium: "Medium", mediumDark: "Medium-dark", dark: "Dark" };
+const TASTES = { sour: "Sour", thin: "Thin", bitter: "Bitter", harsh: "Harsh", balanced: "Balanced", sweet: "Sweet", strong: "Too strong" };
+const GRINDERS = { "niche-zero": "Niche Zero", "mahlkonig-x54": "Mahlkönig X54", "wilfa-uniform": "Wilfa Uniform",
+  "timemore-chestnut-s3": "Timemore Chestnut S3", "baratza-encore": "Baratza Encore", "df64-gen2": "DF64 Gen 2",
+  "1zpresso-q-air": "1Zpresso Q Air", "comandante-c40": "Comandante C40", "timemore-c2": "Timemore C2 / C3" };
+
+const app = document.getElementById("app");
+const text = (tag, content, cls) => { const el = document.createElement(tag); el.textContent = content; if (cls) el.className = cls; return el; };
+const num = (v) => Number.isInteger(v) ? String(v) : v.toFixed(1);
+// Seconds for a shot, hours for a cold brew's steep, minutes and seconds for the rest.
+const duration = (s, method) => method === "espresso" ? `${Math.round(s)} s`
+  : s >= 3600 ? `${num(Math.round(s / 360) / 10)} h`
+  : `${Math.floor(s / 60)}:${String(Math.round(s % 60)).padStart(2, "0")}`;
+
+async function decode(token) {
+  if (!/^[A-Za-z0-9_-]{1,2000}$/.test(token)) throw new Error("bad token");
+  const b64 = token.replace(/-/g, "+").replace(/_/g, "/").padEnd(Math.ceil(token.length / 4) * 4, "=");
+  const bytes = Uint8Array.from(atob(b64), (c) => c.charCodeAt(0));
+  const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream("deflate-raw"));
+  const json = await new Response(stream).text();
+  const r = JSON.parse(json);
+  if (!r || typeof r.n !== "string" || typeof r.s !== "number" || typeof r.d !== "number" || typeof r.y !== "number") throw new Error("bad recipe");
+  return r;
+}
+
+function render(r, token) {
+  document.getElementById("method").textContent = METHODS[r.m] ?? r.m;
+  document.title = `${r.n} · Dialed recipe`;
+
+  const card = document.createElement("section");
+  card.className = "card";
+  const head = document.createElement("div");
+  head.className = "head";
+  head.append(text("h1", r.n));
+  const sub = [r.r, ...(r.o ?? []), ROASTS[r.l]].filter(Boolean).join(" · ");
+  if (sub) head.append(text("div", sub, "sub"));
+  card.append(head);
+
+  const grind = document.createElement("div");
+  grind.className = "grind";
+  grind.append(text("span", "Grind", "label"), text("span", num(r.s), "value"), text("span", `on ${GRINDERS[r.g] ?? r.g}`, "on"));
+  card.append(grind);
+
+  const dl = document.createElement("dl");
+  const row = (k, v) => { const div = document.createElement("div"); div.className = "row"; div.append(text("dt", k), text("dd", v)); dl.append(div); };
+  row(r.m === "espresso" ? "Coffee in → out" : "Coffee → water", `${num(r.d)} g → ${num(r.y)} g`);
+  if (r.t) row(r.m === "espresso" ? "Shot time" : "Total time", duration(r.t, r.m));
+  if (r.k) row("Temperature", `${num(r.k)} °C`);
+  if (r.q?.length) row("Tasted", r.q.map((t) => TASTES[t] ?? t).join(", "));
+  if (r.a != null) row("Brewed", `Day ${r.a} after roast`);
+  card.append(dl);
+
+  const open = text("a", "Open in Dialed", "button");
+  open.href = `dialed://r#${token}`;
+  app.replaceChildren(card, open, text("p", "Dialed converts this setting to your own grinder. Don’t have it yet? Get Dialed on the App Store.", "note"));
+  app.style.display = "flex";
+  app.style.flexDirection = "column";
+  app.style.gap = "16px";
+}
+
+(async () => {
+  const token = decodeURIComponent(location.hash.slice(1));
+  try {
+    render(await decode(token), token);
+  } catch {
+    app.replaceChildren(text("p", "This recipe link is incomplete. Ask for it again, or scan the code on the recipe card.", "error"));
+  }
+})();
+</script>
+</body>
+</html>
