@@ -1,19 +1,17 @@
-/* Text pages (privacy, support): the recipe page's colours and type, Montserrat served with
-   the site (fonts/OFL.txt), no third-party requests. */
+/* Text pages (privacy, support): Fino's colours and type, as in the app (Shared/Theme.swift),
+   Montserrat served with the site (fonts/OFL.txt), no third-party requests. */
 @font-face { font-family: "Montserrat"; font-weight: 500; font-display: swap; src: url("fonts/Montserrat-Medium.ttf") format("truetype"); }
 @font-face { font-family: "Montserrat"; font-weight: 600; font-display: swap; src: url("fonts/Montserrat-SemiBold.ttf") format("truetype"); }
 
 :root {
-  --canvas:#FBFAF7; --card:#FFFFFF; --hairline:#F1EEE4; --ring:rgba(39,31,27,.06);
-  --ink:#271F1B; --muted:#7D7976; --tick:rgba(39,31,27,.35); --set:#B06A2E; --link:#8A4E1E;
-  --bean-top:#5A2E10; --bean-bottom:#130400;
+  --canvas:#FBFAF7; --card:#FFFFFF; --hairline:rgba(63,21,0,.05);
+  --ink:#3F1500; --muted:rgba(63,21,0,.5); --link:#3F1500;
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --canvas:#15110E; --card:#1F1915; --hairline:#2E2621; --ring:rgba(0,0,0,.4);
-    --ink:#F3EDE6; --muted:#A79E97; --tick:rgba(243,237,230,.4); --set:#D9A066; --link:#D9A066;
-    --bean-top:#F6EEE3; --bean-bottom:#D9C8B2;
+    --canvas:#15110E; --card:#1F1915; --hairline:rgba(255,255,255,.08);
+    --ink:#F3EDE6; --muted:rgba(243,237,230,.6); --link:#F3EDE6;
     color-scheme: dark;
   }
 }
@@ -27,11 +25,7 @@ body {
 main { max-width: 620px; margin: 0 auto; }
 
 .brand { display:flex; align-items:center; gap:8px; margin-bottom:32px; }
-.mark { width:32px; height:32px; flex:none; }
-.mark line { stroke-linecap: round; stroke: var(--tick); }
-.mark line.set { stroke: var(--set); }
-.mark .crease { fill:none; stroke: var(--canvas); stroke-linecap: round; }
-.word { height:18px; width:auto; fill: var(--ink); }
+.logo { height:32px; width:auto; flex:none; fill: var(--ink); }
 .lang { margin-left:auto; font-size:13px; font-weight:600; color:var(--muted); text-decoration:none; }
 
 h1 { font-size:28px; font-weight:600; line-height:1.2; letter-spacing:-.01em; margin:0 0 4px; text-wrap: balance; }
@@ -39,6 +33,6 @@ h2 { font-size:16px; font-weight:600; margin:28px 0 4px; }
 p, ul { margin:0 0 10px; }
 ul { padding-left: 20px; }
 .meta { color:var(--muted); font-size:13px; margin-bottom:20px; }
-.summary { background:var(--card); border-radius:16px; padding:14px 18px; box-shadow: 0 0 0 1px var(--ring), 0 1px 1px var(--ring); }
+.summary { background:var(--card); border-radius:16px; padding:14px 18px; box-shadow: 0 0 0 1px var(--hairline); }
 a { color:var(--link); text-underline-offset: 2px; }
 section + section { margin-top:56px; padding-top:32px; border-top:1px solid var(--hairline); }
