@@ -7,9 +7,9 @@ The app was called Dialed; the repo and its address keep that name, since App St
 links to them.
 
 - `index.html`: a short page about Fino (the App Store's marketing URL).
-- `privacy/`: the privacy policy in English and Spanish (the App Store's privacy policy URL).
+- `privacy/`: the privacy policy (the App Store's privacy policy URL).
   Update it whenever Fino starts sending or keeping anything new.
-- `support/`: help and contact in English and Spanish (the App Store's support URL).
+- `support/`: help and contact (the App Store's support URL).
 - `r/`: shared recipes, for people who don't have Fino yet. The app doesn't link here yet (below).
 
 The pages share `page.css` and serve Montserrat from `fonts/` (SIL Open Font License,

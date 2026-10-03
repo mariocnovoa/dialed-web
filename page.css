@@ -26,7 +26,6 @@ main { max-width: 620px; margin: 0 auto; }
 
 .brand { display:flex; align-items:center; gap:8px; margin-bottom:32px; }
 .logo { height:32px; width:auto; flex:none; fill: var(--ink); }
-.lang { margin-left:auto; font-size:13px; font-weight:600; color:var(--muted); text-decoration:none; }
 
 h1 { font-size:28px; font-weight:600; line-height:1.2; letter-spacing:-.01em; margin:0 0 4px; text-wrap: balance; }
 h2 { font-size:16px; font-weight:600; margin:28px 0 4px; }
