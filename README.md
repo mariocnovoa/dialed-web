@@ -14,7 +14,7 @@ links to them.
 
 The pages share `page.css` and serve Montserrat from `fonts/` (SIL Open Font License,
 `fonts/OFL.txt`), so they make no requests to anyone else. The Fino logo in each page's header is
-an inline SVG of the wordmark, drawn from the design's launch screen. `.nojekyll` makes Pages serve the
+an inline SVG of the wordmark, written by `tools/art/RenderBrand.swift`. `.nojekyll` makes Pages serve the
 folder as it is, `.well-known` included.
 
 To publish a change, run `tools/publish-web.sh "What changed"`. It copies this folder into the
